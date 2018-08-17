@@ -1,3 +1,5 @@
 <resources>
   <string name="app_name">StepView</string>
+
+  <string name="text_sign">点击签到</string>
 </resources>
