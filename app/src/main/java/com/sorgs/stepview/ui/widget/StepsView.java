@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.sorgs.stepview.R;
 import com.sorgs.stepview.bean.StepBean;
 import com.sorgs.stepview.utils.SizeUtils;

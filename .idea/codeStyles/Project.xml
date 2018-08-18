@@ -1,5 +1,24 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
+    <AndroidXmlCodeStyleSettings>
+      <option name="USE_CUSTOM_SETTINGS" value="true" />
+      <option name="LAYOUT_SETTINGS">
+        <value>
+          <option name="INSERT_LINE_BREAK_BEFORE_NAMESPACE_DECLARATION" value="true" />
+        </value>
+      </option>
+      <option name="MANIFEST_SETTINGS">
+        <value>
+          <option name="INSERT_LINE_BREAK_BEFORE_NAMESPACE_DECLARATION" value="true" />
+        </value>
+      </option>
+      <option name="OTHER_SETTINGS">
+        <value>
+          <option name="INSERT_LINE_BREAK_BEFORE_NAMESPACE_DECLARATION" value="true" />
+          <option name="INSERT_LINE_BREAK_AFTER_LAST_ATTRIBUTE" value="true" />
+        </value>
+      </option>
+    </AndroidXmlCodeStyleSettings>
     <JavaCodeStyleSettings>
       <option name="FIELD_NAME_PREFIX" value="m" />
       <option name="STATIC_FIELD_NAME_PREFIX" value="s" />
@@ -29,6 +48,11 @@
         <pair source="c" header="h" fileNamingConvention="NONE" />
       </extensions>
     </Objective-C-extensions>
+    <XML>
+      <option name="XML_KEEP_LINE_BREAKS" value="false" />
+      <option name="XML_ALIGN_ATTRIBUTES" value="false" />
+      <option name="XML_SPACE_INSIDE_EMPTY_TAG" value="true" />
+    </XML>
     <codeStyleSettings language="JAVA">
       <arrangement>
         <groups>
@@ -46,6 +70,11 @@
           </group>
         </groups>
       </arrangement>
+    </codeStyleSettings>
+    <codeStyleSettings language="XML">
+      <indentOptions>
+        <option name="CONTINUATION_INDENT_SIZE" value="4" />
+      </indentOptions>
     </codeStyleSettings>
   </code_scheme>
 </component>
