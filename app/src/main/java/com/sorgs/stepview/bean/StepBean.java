@@ -22,21 +22,12 @@ public class StepBean {
 
     private int state;
     private int number;
-    private boolean isUp;
 
-    public StepBean(int state, int number, boolean isUp) {
+    public StepBean(int state, int number) {
         this.state = state;
         this.number = number;
-        this.isUp = isUp;
     }
 
-    public boolean isUp() {
-        return isUp;
-    }
-
-    public void setUp(boolean up) {
-        isUp = up;
-    }
 
     public int getNumber() {
         return number;

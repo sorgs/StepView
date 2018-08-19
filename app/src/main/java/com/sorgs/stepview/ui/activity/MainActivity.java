@@ -48,13 +48,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        mStepBeans.add(new StepBean(StepBean.STEP_COMPLETED, 2, false));
-        mStepBeans.add(new StepBean(StepBean.STEP_COMPLETED, 4, false));
-        mStepBeans.add(new StepBean(StepBean.STEP_CURRENT, 10, true));
-        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, 2, false));
-        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, 4, false));
-        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, 4, false));
-        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, 30, true));
+        mStepBeans.add(new StepBean(StepBean.STEP_COMPLETED, 2));
+        mStepBeans.add(new StepBean(StepBean.STEP_COMPLETED, 4));
+        mStepBeans.add(new StepBean(StepBean.STEP_CURRENT, 10));
+        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, 2));
+        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, 4));
+        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, 4));
+        mStepBeans.add(new StepBean(StepBean.STEP_UNDO, 30));
 
         mStepView.setStepNum(mStepBeans);
     }

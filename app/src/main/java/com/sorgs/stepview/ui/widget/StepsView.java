@@ -12,7 +12,7 @@ import android.view.View;
 
 import com.sorgs.stepview.R;
 import com.sorgs.stepview.bean.StepBean;
-import com.sorgs.stepview.utils.SizeUtils;
+import com.sorgs.stepview.utils.CalcUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,29 +37,29 @@ public class StepsView extends View {
     /**
      * 线段的高度
      */
-    private float mCompletedLineHeight = SizeUtils.dp2px(getContext(), 2f);
+    private float mCompletedLineHeight = CalcUtils.dp2px(getContext(), 2f);
 
     /**
      * 图标宽度
      */
-    private float mIconWeight = SizeUtils.dp2px(getContext(), 21.5f);
+    private float mIconWeight = CalcUtils.dp2px(getContext(), 21.5f);
     /**
      * 图标的高度
      */
-    private float mIconHeight = SizeUtils.dp2px(getContext(), 24f);
+    private float mIconHeight = CalcUtils.dp2px(getContext(), 24f);
     /**
      * UP宽度
      */
-    private float mUpWeight = SizeUtils.dp2px(getContext(), 20.5f);
+    private float mUpWeight = CalcUtils.dp2px(getContext(), 20.5f);
     /**
      * up的高度
      */
-    private float mUpHeight = SizeUtils.dp2px(getContext(), 12f);
+    private float mUpHeight = CalcUtils.dp2px(getContext(), 12f);
 
     /**
      * 线段长度
      */
-    private float mLineWeight = SizeUtils.dp2px(getContext(), 23f);
+    private float mLineWeight = CalcUtils.dp2px(getContext(), 23f);
 
     /**
      * 已经完成的图标
@@ -143,6 +143,7 @@ public class StepsView extends View {
      * 执行动画的位置
      */
     private int mPosition;
+    private int[] mMax;
 
     public StepsView(Context context) {
         this(context, null);
@@ -182,7 +183,7 @@ public class StepsView extends View {
         mTextNumberPaint.setAntiAlias(true);
         mTextNumberPaint.setColor(mUnCompletedTextColor);
         mTextNumberPaint.setStyle(Paint.Style.FILL);
-        mTextNumberPaint.setTextSize(SizeUtils.sp2px(getContext(), 8f));
+        mTextNumberPaint.setTextSize(CalcUtils.sp2px(getContext(), 8f));
 
         //已经完成的icon
         mCompleteIcon = ContextCompat.getDrawable(getContext(), R.drawable.ic_sign_finish);
@@ -204,7 +205,7 @@ public class StepsView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         //图标的中中心Y点
-        mCenterY = SizeUtils.dp2px(getContext(), 28f) + mIconHeight / 2;
+        mCenterY = CalcUtils.dp2px(getContext(), 28f) + mIconHeight / 2;
         //获取左上方Y的位置，获取该点的意义是为了方便画矩形左上的Y位置
         mLeftY = mCenterY - (mCompletedLineHeight / 2);
         //获取右下方Y的位置，获取该点的意义是为了方便画矩形右下的Y位置
@@ -213,7 +214,7 @@ public class StepsView extends View {
         //计算图标中心点
         mCircleCenterPointPositionList.clear();
         //第一个点距离父控件左边14.5dp
-        float size = mIconWeight / 2 + SizeUtils.dp2px(getContext(), 14.5f);
+        float size = mIconWeight / 2 + CalcUtils.dp2px(getContext(), 14.5f);
         mCircleCenterPointPositionList.add(size);
         for (int i = 1; i < mStepNum; i++) {
             //从第二个点开始，每个点距离上一个点为图标的宽度加上线段的23dp的长度
@@ -296,7 +297,7 @@ public class StepsView extends View {
             if (stepsBean.getState() == StepBean.STEP_COMPLETED || (i == mPosition
                     && mCount == ANIMATION_TIME)) {
                 //已经完成了或者是当前动画完成并且需要当前位置需要改变
-                if (stepsBean.isUp()) {
+                if (i == mMax[0] || i == mMax[1]) {
                     //是up的需要橙色
                     mTextNumberPaint.setColor(mCurrentTextColor);
                 } else {
@@ -309,18 +310,18 @@ public class StepsView extends View {
             }
 
             canvas.drawText("+" + stepsBean.getNumber(),
-                    currentComplectedXPosition + SizeUtils.dp2px(getContext(), 2f),
-                    mCenterY - mIconHeight / 2 - SizeUtils.dp2px(getContext(), 0.5f),
+                    currentComplectedXPosition + CalcUtils.dp2px(getContext(), 2f),
+                    mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 0.5f),
                     mTextNumberPaint);
 
             //绘制UP
-            if (stepsBean.isUp()) {
+            if (i == mMax[0] || i == mMax[1]) {
                 //需要UP才进行绘制
                 Rect rectUp =
                         new Rect((int) (currentComplectedXPosition - mUpWeight / 2),
-                                (int) (mCenterY - mIconHeight / 2 - SizeUtils.dp2px(getContext(), 8f) - mUpHeight),
+                                (int) (mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 8f) - mUpHeight),
                                 (int) (currentComplectedXPosition + mUpWeight / 2),
-                                (int) (mCenterY - mIconHeight / 2 - SizeUtils.dp2px(getContext(), 8f)));
+                                (int) (mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 8f)));
                 mUpIcon.setBounds(rectUp);
                 mUpIcon.draw(canvas);
             }
@@ -382,7 +383,7 @@ public class StepsView extends View {
             //绘制增加的魅力值数目
             if (stepsBean.getState() == StepBean.STEP_COMPLETED) {
                 //已经完成了
-                if (stepsBean.isUp()) {
+                if (i == mMax[0] || i == mMax[1]) {
                     //是up的需要橙色
                     mTextNumberPaint.setColor(mCurrentTextColor);
                 } else {
@@ -394,18 +395,18 @@ public class StepsView extends View {
                 mTextNumberPaint.setColor(mUnCompletedLineColor);
             }
             canvas.drawText("+" + stepsBean.getNumber(),
-                    currentComplectedXPosition + SizeUtils.dp2px(getContext(), 2f),
-                    mCenterY - mIconHeight / 2 - SizeUtils.dp2px(getContext(), 0.5f),
+                    currentComplectedXPosition + CalcUtils.dp2px(getContext(), 2f),
+                    mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 0.5f),
                     mTextNumberPaint);
 
             //绘制UP
-            if (stepsBean.isUp()) {
+            if (i == mMax[0] || i == mMax[1]) {
                 //需要UP才进行绘制
                 Rect rectUp =
                         new Rect((int) (currentComplectedXPosition - mUpWeight / 2),
-                                (int) (mCenterY - mIconHeight / 2 - SizeUtils.dp2px(getContext(), 8f) - mUpHeight),
+                                (int) (mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 8f) - mUpHeight),
                                 (int) (currentComplectedXPosition + mUpWeight / 2),
-                                (int) (mCenterY - mIconHeight / 2 - SizeUtils.dp2px(getContext(), 8f)));
+                                (int) (mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 8f)));
                 mUpIcon.setBounds(rectUp);
                 mUpIcon.draw(canvas);
             }
@@ -423,6 +424,8 @@ public class StepsView extends View {
         }
         this.mStepBeanList = stepsBeanList;
         mStepNum = mStepBeanList.size();
+        //找出最大的两个值的位置
+        mMax = CalcUtils.findMax(stepsBeanList);
         //引起重绘
         postInvalidate();
     }
