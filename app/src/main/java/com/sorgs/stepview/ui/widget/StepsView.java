@@ -96,6 +96,9 @@ public class StepsView extends View {
     private List<StepBean> mStepBeanList;
     private int mStepNum = 0;
 
+    /**
+     * 图标中心点位置
+     */
     private List<Float> mCircleCenterPointPositionList;
     /**
      * 未完成的线段Paint
@@ -166,19 +169,21 @@ public class StepsView extends View {
 
         mCircleCenterPointPositionList = new ArrayList<>();
 
+        //未完成文字画笔
         mUnCompletedPaint = new Paint();
         mUnCompletedPaint.setAntiAlias(true);
         mUnCompletedPaint.setColor(mUnCompletedLineColor);
         mUnCompletedPaint.setStrokeWidth(2);
         mUnCompletedPaint.setStyle(Paint.Style.FILL);
 
+        //已完成画笔文字
         mCompletedPaint = new Paint();
         mCompletedPaint.setAntiAlias(true);
         mCompletedPaint.setColor(mCompletedLineColor);
         mCompletedPaint.setStrokeWidth(2);
         mCompletedPaint.setStyle(Paint.Style.FILL);
 
-        //魅力值paint
+        //number paint
         mTextNumberPaint = new Paint();
         mTextNumberPaint.setAntiAlias(true);
         mTextNumberPaint.setColor(mUnCompletedTextColor);
@@ -197,8 +202,7 @@ public class StepsView extends View {
 
     @Override
     protected synchronized void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec),
-                MeasureSpec.getSize(heightMeasureSpec));
+        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec));
     }
 
     @Override
@@ -244,7 +248,6 @@ public class StepsView extends View {
             float preComplectedXPosition = mCircleCenterPointPositionList.get(i) + mIconWeight / 2;
             if (i != mCircleCenterPointPositionList.size() - 1) {
                 //最后一条不需要绘制
-
                 if (mStepBeanList.get(i + 1).getState() == StepBean.STEP_COMPLETED) {
                     //下一个是已完成，当前才需要绘制绿色
                     canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWeight,
@@ -294,6 +297,7 @@ public class StepsView extends View {
                 }
             }
 
+            //绘制图标
             if (stepsBean.getState() == StepBean.STEP_COMPLETED || (i == mPosition
                     && mCount == ANIMATION_TIME)) {
                 //已经完成了或者是当前动画完成并且需要当前位置需要改变
@@ -380,7 +384,7 @@ public class StepsView extends View {
                 mCompleteIcon.draw(canvas);
             }
 
-            //绘制增加的魅力值数目
+            //绘制增加的分数数目
             if (stepsBean.getState() == StepBean.STEP_COMPLETED) {
                 //已经完成了
                 if (i == mMax[0] || i == mMax[1]) {
@@ -422,7 +426,7 @@ public class StepsView extends View {
         if (stepsBeanList == null) {
             return;
         }
-        this.mStepBeanList = stepsBeanList;
+        mStepBeanList = stepsBeanList;
         mStepNum = mStepBeanList.size();
         //找出最大的两个值的位置
         mMax = CalcUtils.findMax(stepsBeanList);
