@@ -2,7 +2,6 @@ package com.sorgs.stepview.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 
 import com.sorgs.stepview.R;
@@ -34,12 +33,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initListener() {
-        mTvSign.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mStepView.startSignAnimation(2);
-            }
-        });
+        mTvSign.setOnClickListener(v -> mStepView.startSignAnimation(2));
     }
 
     private void initView() {
