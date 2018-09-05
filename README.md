@@ -53,11 +53,11 @@ mRightY = mCenterY + mCompletedLineHeight / 2;
 //计算图标中心点
 mCircleCenterPointPositionList.clear();
 //第一个点距离父控件左边14.5dp
-float size = mIconWeight / 2 + CalcUtils.dp2px(getContext(), 14.5f);
+float size = mIconWidth / 2 + CalcUtils.dp2px(getContext(), 14.5f);
 mCircleCenterPointPositionList.add(size);
 for (int i = 1; i < mStepNum; i++) {
     //从第二个点开始，每个点距离上一个点为图标的宽度加上线段的23dp的长度
-    size = size + mIconWeight + mLineWeight;
+    size = size + mIconWidth + mLineWidth;
     mCircleCenterPointPositionList.add(size);
 }
 ```
@@ -128,16 +128,16 @@ if (isAnimation) {
  - 绘制线段
 ``` Java
 //绘制线段
-float preComplectedXPosition = mCircleCenterPointPositionList.get(i) + mIconWeight / 2;
+float preComplectedXPosition = mCircleCenterPointPositionList.get(i) + mIconWidth / 2;
 if (i != mCircleCenterPointPositionList.size() - 1) {
     //最后一条不需要绘制
     if (mStepBeanList.get(i + 1).getState() == StepBean.STEP_COMPLETED) {
         //下一个是已完成，当前才需要绘制绿色
-        canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWeight,
+        canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWidth,
                 mRightY, mCompletedPaint);
     } else {
         //其余绘制灰色
-        canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWeight,
+        canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWidth,
                 mRightY, mUnCompletedPaint);
     }
 }
@@ -148,9 +148,9 @@ if (i != mCircleCenterPointPositionList.size() - 1) {
 ``` Java
 //绘制图标
 float currentComplectedXPosition = mCircleCenterPointPositionList.get(i);
-Rect rect = new Rect((int) (currentComplectedXPosition - mIconWeight / 2),
+Rect rect = new Rect((int) (currentComplectedXPosition - mIconWidth / 2),
         (int) (mCenterY - mIconHeight / 2),
-        (int) (currentComplectedXPosition + mIconWeight / 2),
+        (int) (currentComplectedXPosition + mIconWidthvvvv / 2),
         (int) (mCenterY + mIconHeight / 2));
 StepBean stepsBean = mStepBeanList.get(i);
 if (stepsBean.getState() == StepBean.STEP_UNDO) {
@@ -195,9 +195,9 @@ canvas.drawText("+" + stepsBean.getNumber(),
 if (i == mMax[0] || i == mMax[1]) {
     //需要UP才进行绘制
     Rect rectUp =
-            new Rect((int) (currentComplectedXPosition - mUpWeight / 2),
+            new Rect((int) (currentComplectedXPosition - mUpWidth / 2),
                     (int) (mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 8f) - mUpHeight),
-                    (int) (currentComplectedXPosition + mUpWeight / 2),
+                    (int) (currentComplectedXPosition + mUpWidth / 2),
                     (int) (mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 8f)));
     mUpIcon.setBounds(rectUp);
     mUpIcon.draw(canvas);
@@ -224,33 +224,33 @@ public void startSignAnimation(int position) {
  - 绘制线段动画
 ``` Java
 //绘制线段
-float preComplectedXPosition = mCircleCenterPointPositionList.get(i) + mIconWeight / 2;
+float preComplectedXPosition = mCircleCenterPointPositionList.get(i) + mIconWidth / 2;
 if (i != mCircleCenterPointPositionList.size() - 1) {
     //最后一条不需要绘制
     if (mStepBeanList.get(i + 1).getState() == StepBean.STEP_COMPLETED) {
         //下一个是已完成，当前才需要绘制绿色
-        canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWeight,
+        canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWidth,
                 mRightY, mCompletedPaint);
     } else {
         //其余绘制灰色
         //当前位置执行动画
         if (i == mPosition - 1) {
             //绿色开始绘制的地方,
-            float endX = preComplectedXPosition + mAnimationWeight * (mCount / ANIMATION_INTERVAL);
+            float endX = preComplectedXPosition + mAnimationWidth * (mCount / ANIMATION_INTERVAL);
             //绘制绿色
             canvas.drawRect(preComplectedXPosition, mLeftY, endX, mRightY, mCompletedPaint);
             //绘制灰色
-            canvas.drawRect(endX, mLeftY, preComplectedXPosition + mLineWeight,
+            canvas.drawRect(endX, mLeftY, preComplectedXPosition + mLineWidth,
                     mRightY, mUnCompletedPaint);
         } else {
-            canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWeight,
+            canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWidth,
                     mRightY, mUnCompletedPaint);
         }
     }
 }
 ```
      - 对于未签到和已经签到的和上面的绘制没有太多变，仅仅在当前签到位置执行动画效果
-     - 定义mCount为整个动画执行分段的次数记录；ANIMATION_INTERVAL为每次动画执行的时间间隔，暂定10ms；mAnimationWeight为每次间隔中增加的长度。然后每次用根据是分度绘制的第几次算出绘制橙色的长度，然后根据线段长度减去这段长度算出灰色的长度，进行绘制。
+     - 定义mCount为整个动画执行分段的次数记录；ANIMATION_INTERVAL为每次动画执行的时间间隔，暂定10ms；mAnimationWidth为每次间隔中增加的长度。然后每次用根据是分度绘制的第几次算出绘制橙色的长度，然后根据线段长度减去这段长度算出灰色的长度，进行绘制。
 
  - 绘制图标，文字，up动画
 ``` Java

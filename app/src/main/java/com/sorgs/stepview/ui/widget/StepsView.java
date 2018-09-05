@@ -42,7 +42,7 @@ public class StepsView extends View {
     /**
      * 图标宽度
      */
-    private float mIconWeight = CalcUtils.dp2px(getContext(), 21.5f);
+    private float mIconWidth = CalcUtils.dp2px(getContext(), 21.5f);
     /**
      * 图标的高度
      */
@@ -50,7 +50,7 @@ public class StepsView extends View {
     /**
      * UP宽度
      */
-    private float mUpWeight = CalcUtils.dp2px(getContext(), 20.5f);
+    private float mUpWidth = CalcUtils.dp2px(getContext(), 20.5f);
     /**
      * up的高度
      */
@@ -59,7 +59,7 @@ public class StepsView extends View {
     /**
      * 线段长度
      */
-    private float mLineWeight = CalcUtils.dp2px(getContext(), 23f);
+    private float mLineWidth = CalcUtils.dp2px(getContext(), 23f);
 
     /**
      * 已经完成的图标
@@ -140,7 +140,7 @@ public class StepsView extends View {
     /**
      * 执行动画线段每次绘制的长度，线段的总长度除以总共执行的时间乘以每次执行的间隔时间
      */
-    private float mAnimationWeight = (mLineWeight / ANIMATION_TIME) * ANIMATION_INTERVAL;
+    private float mAnimationWidth = (mLineWidth / ANIMATION_TIME) * ANIMATION_INTERVAL;
 
     /**
      * 执行动画的位置
@@ -218,11 +218,11 @@ public class StepsView extends View {
         //计算图标中心点
         mCircleCenterPointPositionList.clear();
         //第一个点距离父控件左边14.5dp
-        float size = mIconWeight / 2 + CalcUtils.dp2px(getContext(), 14.5f);
+        float size = mIconWidth / 2 + CalcUtils.dp2px(getContext(), 14.5f);
         mCircleCenterPointPositionList.add(size);
         for (int i = 1; i < mStepNum; i++) {
             //从第二个点开始，每个点距离上一个点为图标的宽度加上线段的23dp的长度
-            size = size + mIconWeight + mLineWeight;
+            size = size + mIconWidth + mLineWidth;
             mCircleCenterPointPositionList.add(size);
         }
     }
@@ -245,12 +245,12 @@ public class StepsView extends View {
     private void drawSign(Canvas canvas) {
         for (int i = 0; i < mCircleCenterPointPositionList.size(); i++) {
             //绘制线段
-            float preComplectedXPosition = mCircleCenterPointPositionList.get(i) + mIconWeight / 2;
+            float preComplectedXPosition = mCircleCenterPointPositionList.get(i) + mIconWidth / 2;
             if (i != mCircleCenterPointPositionList.size() - 1) {
                 //最后一条不需要绘制
                 if (mStepBeanList.get(i + 1).getState() == StepBean.STEP_COMPLETED) {
                     //下一个是已完成，当前才需要绘制绿色
-                    canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWeight,
+                    canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWidth,
                             mRightY, mCompletedPaint);
                 } else {
                     //其余绘制灰色
@@ -258,14 +258,14 @@ public class StepsView extends View {
                     //当前位置执行动画
                     if (i == mPosition - 1) {
                         //绿色开始绘制的地方,
-                        float endX = preComplectedXPosition + mAnimationWeight * (mCount / ANIMATION_INTERVAL);
+                        float endX = preComplectedXPosition + mAnimationWidth * (mCount / ANIMATION_INTERVAL);
                         //绘制绿色
                         canvas.drawRect(preComplectedXPosition, mLeftY, endX, mRightY, mCompletedPaint);
                         //绘制灰色
-                        canvas.drawRect(endX, mLeftY, preComplectedXPosition + mLineWeight,
+                        canvas.drawRect(endX, mLeftY, preComplectedXPosition + mLineWidth,
                                 mRightY, mUnCompletedPaint);
                     } else {
-                        canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWeight,
+                        canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWidth,
                                 mRightY, mUnCompletedPaint);
                     }
                 }
@@ -273,9 +273,9 @@ public class StepsView extends View {
 
             //绘制图标
             float currentComplectedXPosition = mCircleCenterPointPositionList.get(i);
-            Rect rect = new Rect((int) (currentComplectedXPosition - mIconWeight / 2),
+            Rect rect = new Rect((int) (currentComplectedXPosition - mIconWidth / 2),
                     (int) (mCenterY - mIconHeight / 2),
-                    (int) (currentComplectedXPosition + mIconWeight / 2),
+                    (int) (currentComplectedXPosition + mIconWidth / 2),
                     (int) (mCenterY + mIconHeight / 2));
 
             StepBean stepsBean = mStepBeanList.get(i);
@@ -322,9 +322,9 @@ public class StepsView extends View {
             if (i == mMax[0] || i == mMax[1]) {
                 //需要UP才进行绘制
                 Rect rectUp =
-                        new Rect((int) (currentComplectedXPosition - mUpWeight / 2),
+                        new Rect((int) (currentComplectedXPosition - mUpWidth / 2),
                                 (int) (mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 8f) - mUpHeight),
-                                (int) (currentComplectedXPosition + mUpWeight / 2),
+                                (int) (currentComplectedXPosition + mUpWidth / 2),
                                 (int) (mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 8f)));
                 mUpIcon.setBounds(rectUp);
                 mUpIcon.draw(canvas);
@@ -350,25 +350,25 @@ public class StepsView extends View {
     private void drawUnSign(Canvas canvas) {
         for (int i = 0; i < mCircleCenterPointPositionList.size(); i++) {
             //绘制线段
-            float preComplectedXPosition = mCircleCenterPointPositionList.get(i) + mIconWeight / 2;
+            float preComplectedXPosition = mCircleCenterPointPositionList.get(i) + mIconWidth / 2;
             if (i != mCircleCenterPointPositionList.size() - 1) {
                 //最后一条不需要绘制
                 if (mStepBeanList.get(i + 1).getState() == StepBean.STEP_COMPLETED) {
                     //下一个是已完成，当前才需要绘制绿色
-                    canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWeight,
+                    canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWidth,
                             mRightY, mCompletedPaint);
                 } else {
                     //其余绘制灰色
-                    canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWeight,
+                    canvas.drawRect(preComplectedXPosition, mLeftY, preComplectedXPosition + mLineWidth,
                             mRightY, mUnCompletedPaint);
                 }
             }
 
             //绘制图标
             float currentComplectedXPosition = mCircleCenterPointPositionList.get(i);
-            Rect rect = new Rect((int) (currentComplectedXPosition - mIconWeight / 2),
+            Rect rect = new Rect((int) (currentComplectedXPosition - mIconWidth / 2),
                     (int) (mCenterY - mIconHeight / 2),
-                    (int) (currentComplectedXPosition + mIconWeight / 2),
+                    (int) (currentComplectedXPosition + mIconWidth / 2),
                     (int) (mCenterY + mIconHeight / 2));
 
             StepBean stepsBean = mStepBeanList.get(i);
@@ -407,9 +407,9 @@ public class StepsView extends View {
             if (i == mMax[0] || i == mMax[1]) {
                 //需要UP才进行绘制
                 Rect rectUp =
-                        new Rect((int) (currentComplectedXPosition - mUpWeight / 2),
+                        new Rect((int) (currentComplectedXPosition - mUpWidth / 2),
                                 (int) (mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 8f) - mUpHeight),
-                                (int) (currentComplectedXPosition + mUpWeight / 2),
+                                (int) (currentComplectedXPosition + mUpWidth / 2),
                                 (int) (mCenterY - mIconHeight / 2 - CalcUtils.dp2px(getContext(), 8f)));
                 mUpIcon.setBounds(rectUp);
                 mUpIcon.draw(canvas);
