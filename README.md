@@ -5,7 +5,7 @@
 需求：以七天为周天，执行当天签到需要一个动画效果；签到前灰色，签到后变为绿色；每天加的分数不一定，第三天和第七天加的比较多，分数签到完成为橙色，有up标签。
 
 - 效果图：
-![-](http://ogrop3bok.bkt.clouddn.com/stepView.gif)
+![-](https://github.com/sorgs/StepView/blob/master/stepView.gif)
 
 # 分析
 - 首先是把该绘制的东西绘制到画布上，这点没什么好说，上一遍博客差不多说了怎么去绘制。
